@@ -1,13 +1,14 @@
 const bcrypt = require("bcrypt");
 const Users = require("../models/UsersM");
+
 exports.signup = async (req, res) => {
-  const { firstName, lastName , email, phone, password } = req.body;
+  const { firstName, lastName, email, phone, password } = req.body;
   console.log("shubham : ", req.body);
   if (!firstName || !email || !password || !phone)
     return res.status(404).json("Please fill all required fields");
   try {
     const salt = await bcrypt.genSalt(10);
-    const hashPassword =await bcrypt.hash(password, salt);
+    const hashPassword = await bcrypt.hash(password, salt);
     const result = await Users.create({
       firstName: firstName,
       lastName: lastName,
@@ -25,5 +26,24 @@ exports.signup = async (req, res) => {
       msg = e.message;
     }
     res.status(400).json(msg);
+  }
+};
+
+exports.login = async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password)
+    return res.status(404).json("Please fill all required fields");
+  try {
+    const userDetails = await Users.findOne({
+      where: {
+        email: email,
+      },
+    });
+    if (!userDetails) return res.status(404).json("User not found");
+    const isMatch = await bcrypt.compare(password, userDetails.password);
+    if (!isMatch) return res.status(400).json("Invalid credentials");
+    res.status(200).json(userDetails);
+  } catch (e) {
+    res.status(500).json(e.message);
   }
 };

@@ -6,11 +6,11 @@ import { PiCodesandboxLogoFill } from "react-icons/pi";
 
 const AuthLayout = () => {
   return (
-    <div className="flex justify-evenly items-center h-[100vh] bg-#fdfcf3 ">
+    <div className="flex justify-evenly items-center h-[100vh]">
       <div className="h-[95vh] w-[30vw] bg-neutral-900 rounded-xl flex justify-center items-center">
         <div className="">
           <span className="text-3xl text-white font-bold flex items-center ">
-            <PiCodesandboxLogoFill/>
+            <PiCodesandboxLogoFill />
             <p className="p-1"> ChatEase </p>
           </span>
           <p className="animate-typing overflow-hidden whitespace-nowrap border-r-4 border-r-white pr-5 text-white font-bol  ">
@@ -18,9 +18,7 @@ const AuthLayout = () => {
           </p>
         </div>
       </div>
-      <SignUp/>
-      {/* <Login/> */}
-      {/* <Optverification/> */}
+      <Login />
     </div>
   );
 };
