@@ -10,7 +10,7 @@ const Optverification = () => {
 
           <div className="relative size-full  mt-8">
             <input
-              className="size-full bg-transparent border-2  border-neutral-500  rounded-3xl  placeholder:text-neutral-500  py-2 pr-11 pl-5"
+              className="size-full bg-transparent border-2  border-neutral-500  rounded-3xl  placeholder:text-neutral-500  py-2 pr-11 pl-5 shadow-sm hover:shadow-md "
               type="text"
               id="Otp"
               placeholder="e.g. 123456"

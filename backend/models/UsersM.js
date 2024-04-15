@@ -11,13 +11,18 @@ const Users = sequelize.define("Users",{
         primaryKey:true,
         
     },    
-    name:{
+    firstName:{
+        type:Sequelize.STRING,
+        allowNull:false,
+
+    },
+    lastName:{
         type:Sequelize.STRING,
         allowNull:false,
 
     },
     phone:{
-        type:Sequelize.INTEGER,
+        type:Sequelize.STRING,
         allowNull:false,
 
     },

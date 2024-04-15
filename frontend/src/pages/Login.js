@@ -11,7 +11,7 @@ const Login = () => {
 
           <div className="relative size-full  my-7">
             <input
-              className="size-full bg-transparent border-2  border-white  rounded-3xl  placeholder:text-neutral-500  py-2 pr-11 pl-5"
+              className="size-full bg-transparent border-2  border-white  rounded-3xl  placeholder:text-neutral-500  py-2 pr-11 pl-5 shadow-sm hover:shadow-md "
               type="email"
               id="email"
               placeholder="Enter Email"
@@ -22,7 +22,7 @@ const Login = () => {
 
           <div className="relative size-full my-2">
             <input
-              className="size-full bg-transparent border-2  border-white  rounded-3xl  placeholder:text-neutral-500  py-2 pr-11 pl-5 "
+              className="size-full bg-transparent border-2  border-white  rounded-3xl  placeholder:text-neutral-500  py-2 pr-11 pl-5 shadow-sm hover:shadow-md  "
               type="password"
               id="password"
               placeholder="Password"
