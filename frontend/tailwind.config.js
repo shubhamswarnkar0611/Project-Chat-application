@@ -8,11 +8,11 @@ module.exports = {
       colors: {
         "#FCF7FF": "#FCF7FF",
         "#595f39":"#595f39",
-        "#C4C5BA":"#C4C5BA",
-        "#E4E4DE":"#E4E4DE",
-        "#F4F1DE":"#F4F1DE",
-        "#FAF9F6":"#FAF9F6",
+        "#3C3B34":"#3C3B34",
         "#fdfcf3":"#fdfcf3",
+        "#1A451E":"#1A451E",
+        "#1D201D":"#1D201D",
+        "#3FACFF":"#3FACFF",
        
       },
       keyframes: {

@@ -27,7 +27,7 @@ const SignUp = () => {
     e.preventDefault();
     try {
       const result = await apiService.signup(userInfo);
-      console.log(result);
+      localStorage.setItem("token", result.data);
       navigate("/")
 
     } catch (e) {

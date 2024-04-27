@@ -1,5 +1,7 @@
 const bcrypt = require("bcrypt");
 const Users = require("../models/UsersM");
+const jwt = require("jsonwebtoken");
+const JWT_SECRETE = "$ecreteHai";
 
 exports.signup = async (req, res) => {
   const { firstName, lastName, email, phone, password } = req.body;
@@ -16,7 +18,8 @@ exports.signup = async (req, res) => {
       phone: phone,
       password: hashPassword,
     });
-    res.status(200).json(result);
+    const authToken = jwt.sign({ userId: result.id }, JWT_SECRETE);
+    res.status(200).json(authToken);
   } catch (e) {
     let msg;
     console.log("shubham : ", e.name);
@@ -42,7 +45,18 @@ exports.login = async (req, res) => {
     if (!userDetails) return res.status(404).json("User not found");
     const isMatch = await bcrypt.compare(password, userDetails.password);
     if (!isMatch) return res.status(400).json("Invalid credentials");
-    res.status(200).json(userDetails);
+    const authToken = jwt.sign({ userId: userDetails.id }, JWT_SECRETE);
+    res.status(200).json(authToken);
+  } catch (e) {
+    res.status(500).json(e.message);
+  }
+};
+
+exports.getUserData = async (req, res) => {
+  const { userId } = req.user;
+  try {
+    const userData = await Users.findByPk(userId);
+    res.status(200).json(userData);
   } catch (e) {
     res.status(500).json(e.message);
   }

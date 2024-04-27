@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaLock, FaUser } from "react-icons/fa";
+import { FaLock} from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { PiCodesandboxLogoFill } from "react-icons/pi";
 import { Link, useNavigate } from "react-router-dom";
@@ -22,8 +22,8 @@ const Login = () => {
     try{
         const result=await apiService.login(loginDetails)
         console.log(result.data);
+        localStorage.setItem("token", result.data);
         navigate("/")
-        
     }catch(e){
         console.log(e.response.data);
     }
@@ -31,7 +31,7 @@ const Login = () => {
  }
 
   return (
-    <div className="flex justify-evenly items-center h-[100vh] ">
+    <div className="flex justify-evenly items-center h-[100vh]  ">
       <div className="h-[95vh] w-[30vw] bg-neutral-900 rounded-xl flex justify-center items-center">
         <div className="">
           <span className="text-3xl text-white font-bold flex items-center ">

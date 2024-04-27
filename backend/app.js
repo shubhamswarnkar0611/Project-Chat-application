@@ -6,7 +6,7 @@ const sequelize = require('./utils/database');
 const UsersRouter = require("./routes/UsersR")
 
  
-app.use(cors());
+app.use(cors()); // handle it correctly read more about it in youtube
 app.use(bodyParser.json({extended: false}));
 
 app.use(UsersRouter);

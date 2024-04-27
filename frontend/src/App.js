@@ -2,7 +2,8 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
-import Home from "./pages/Home";
+import HomeLayout from "./layout/HomeLayout";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -10,7 +11,8 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/" element={<Home />} />
+        {/* private Route */}
+        <Route path="/" element={<ProtectedRoute Page={HomeLayout} />} />
       </Routes>
     </BrowserRouter>
   );

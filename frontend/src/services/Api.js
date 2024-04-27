@@ -10,6 +10,11 @@ export class ApiService {
     const result = axios.post(`${Base_URL}/login`, loginDetails);
     return result;
   }
+  getUserData(token){
+
+    const result = axios.post(`${Base_URL}/getUserData`, {token});
+    return result;
+  }
 }
 
 const apiService = new ApiService();
