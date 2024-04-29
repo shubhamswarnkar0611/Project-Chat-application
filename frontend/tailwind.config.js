@@ -13,6 +13,9 @@ module.exports = {
         "#1A451E":"#1A451E",
         "#1D201D":"#1D201D",
         "#3FACFF":"#3FACFF",
+        "#CACECA":"#CACECA",
+        "#979D74":"#979D74",
+        "#2A344A":"#2A344A",
        
       },
       keyframes: {

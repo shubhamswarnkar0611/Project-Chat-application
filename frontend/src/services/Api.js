@@ -6,13 +6,21 @@ export class ApiService {
     const result = axios.post(`${Base_URL}/signup`, usersDetails);
     return result;
   }
-  login(loginDetails){
+  login(loginDetails) {
     const result = axios.post(`${Base_URL}/login`, loginDetails);
     return result;
   }
-  getUserData(token){
+  getUserData(token) {
+    const result = axios.post(`${Base_URL}/getUserData`, { token });
+    return result;
+  }
+  sendMessage(message, id) {
+    const result = axios.post(`${Base_URL}/sendMessage`, { message, id });
+    return result;
+  }
 
-    const result = axios.post(`${Base_URL}/getUserData`, {token});
+  getAllMessages() {
+    const result = axios.get(`${Base_URL}/getAllMessage`);
     return result;
   }
 }
