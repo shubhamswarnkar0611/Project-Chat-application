@@ -8,5 +8,6 @@ const fetchUser = require("../middlewares/fetchUser")
 router.post('/signup',UsersController.signup)
 router.post('/login',UsersController.login)
 router.post('/getUserData',fetchUser.fetchUserByToken,UsersController.getUserData)
+router.get('/getAllUsers',UsersController.getAllUsers)
 
 module.exports=router

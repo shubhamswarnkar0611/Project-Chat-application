@@ -14,13 +14,17 @@ export class ApiService {
     const result = axios.post(`${Base_URL}/getUserData`, { token });
     return result;
   }
-  sendMessage(message, id) {
-    const result = axios.post(`${Base_URL}/sendMessage`, { message, id });
+  sendMessage(message,senderId,receiverId) {
+    const result = axios.post(`${Base_URL}/sendMessage`, { message,senderId,receiverId});
     return result;
   }
 
-  getAllMessages() {
-    const result = axios.get(`${Base_URL}/getAllMessage`);
+  getAllMessages(senderId,receiverId) {
+    const result = axios.post(`${Base_URL}/getAllMessage`,{senderId,receiverId});
+    return result;
+  }
+  getAllUsers() {
+    const result = axios.get(`${Base_URL}/getAllUsers`);
     return result;
   }
 }

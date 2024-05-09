@@ -61,3 +61,15 @@ exports.getUserData = async (req, res) => {
     res.status(500).json(e.message);
   }
 };
+
+exports.getAllUsers = async (req, res) => {
+  try {
+    const AllUsers = await Users.findAll({
+      attributes: { exclude: ["password"] },
+    });
+    console.log(AllUsers, "Comiing ");
+    res.status(200).json(AllUsers);
+  } catch (e) {
+    res.status(500).json(e.message);
+  }
+};

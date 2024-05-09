@@ -1,5 +1,7 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../utils/database");
+const User = require("./UsersM");
+const Conversation = require("./ConversationM");
 
 const Messages = sequelize.define("Messages", {
   id: {
@@ -14,5 +16,8 @@ const Messages = sequelize.define("Messages", {
     allowNull: false,
   },
 });
+Messages.belongsTo(User, { as: "sender", foreignKey: "senderId" });
+Messages.belongsTo(User, { as: "receiver", foreignKey: "receiverId" });
+Conversation.belongsTo(Messages);
 
 module.exports = Messages;

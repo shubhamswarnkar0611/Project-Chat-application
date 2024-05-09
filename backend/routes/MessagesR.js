@@ -5,6 +5,6 @@ const MessagesController = require("../controllers/MessagesC")
 // Routes
 
 router.post('/sendMessage',MessagesController.sendMessage)
-router.get('/getAllMessage',MessagesController.getAllMessage)
+router.post('/getAllMessage',MessagesController.getMessageBetweenTwoUser)
 
 module.exports=router

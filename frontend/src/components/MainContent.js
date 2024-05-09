@@ -1,12 +1,8 @@
 import React from "react";
-import GroupChat from "../pages/GroupChat";
+import { Outlet } from "react-router-dom";
 
 const MainContent = () => {
-  return (
-    <div className="w-[80vw] flex justify-center items-center  h-[100vh] ">
-      <GroupChat />
-    </div>
-  );
+  return <Outlet />;
 };
 
 export default MainContent;

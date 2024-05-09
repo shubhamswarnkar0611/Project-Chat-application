@@ -12,10 +12,15 @@ module.exports = {
         "#fdfcf3":"#fdfcf3",
         "#1A451E":"#1A451E",
         "#1D201D":"#1D201D",
+        "#373730":"#373730",
         "#3FACFF":"#3FACFF",
         "#CACECA":"#CACECA",
         "#979D74":"#979D74",
         "#2A344A":"#2A344A",
+        "#A3CBC4":"#A3CBC4",
+        "#AFAD88":"#AFAD88",
+        "#AEAC9A":"#AEAC9A",
+
        
       },
       keyframes: {
