@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import ListOtherUser from "../components/ListOtherUser";
-import ChatContent from "../components/ChatContent";
+import React from "react";
+import ListOtherUser from "../components/PrivateChatComponents/ListOtherUser";
+import ChatContent from "../components/PrivateChatComponents/ChatContent";
 
 const PrivateChat = () => {
   return (

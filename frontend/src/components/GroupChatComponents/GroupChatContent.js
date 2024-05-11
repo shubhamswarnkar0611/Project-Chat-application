@@ -1,30 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
-import ChatBubble from "./ChatBubble";
-import apiService from "../services/Api";
+import apiService from "../../services/Api";
 import { useSelector, useDispatch } from "react-redux";
 import ScrollToBottom from "react-scroll-to-bottom";
-import { socket } from "../services/Socket-io";
-import { setMessages } from "../store/messageSlice";
-import useGetRealTimeMessage from "../hooks/useGetRealTimeMessage";
+import { setMessages } from "../../store/messageSlice";
+import GroupChatBubble from "./GroupChatBubble";
 
-const ChatContent = () => {
+const GroupChatContent = () => {
   const dispatch=useDispatch()
   const [message, setMessage] = useState();
   const currentUserData = useSelector((state) => state.user.currentUserDetails);
-  const selectedUserData = useSelector(
-    (state) => state.user.selectedUserDetails
+  const selectedGroupData = useSelector(
+    (state) => state.group.selectedGroupDetails
   );
   const getmessage = useSelector((state) => state.message.message);
 
-  async function handleMesssage(e) {
+  async function sendMesssageHandler(e) {
     e.preventDefault();
-    console.log(message, currentUserData.id, selectedUserData.id);
+    console.log(message, currentUserData.id, selectedGroupData.id);
     try {
-      const Message = await apiService.sendMessage(
+      const Message = await apiService.sendGroupMessage(
         message,
         currentUserData.id,
-        selectedUserData.id
+        selectedGroupData.id
       );
       console.log(Message,"working")
 
@@ -44,7 +42,7 @@ const ChatContent = () => {
 
   return (
     <div className="  w-[67vw]  rounded-2xl h-[89vh] mx-4">
-      {selectedUserData && (
+      {selectedGroupData && (
         <>
           <div className="h-[10vh] rounded-xl flex items-center justify-between px-4 ">
             <div className="flex items-center">
@@ -55,7 +53,7 @@ const ChatContent = () => {
                 className="rounded-full"
               />
               <p className="text-xl font-semibold ml-3 text-#1D201D">
-                {selectedUserData.firstName} {selectedUserData.lastName}
+                {selectedGroupData.name}
               </p>
             </div>
 
@@ -69,13 +67,13 @@ const ChatContent = () => {
               <div class="flex w-full flex-col gap-4 ">
                 {getmessage &&
                   getmessage.map((message) => {
-                    return <ChatBubble message={message} />;
+                    return <GroupChatBubble message={message} />;
                   })}
               </div>
             </ScrollToBottom>
 
             <div className="flex justify-center">
-              <form onSubmit={handleMesssage}>
+              <form onSubmit={sendMesssageHandler}>
                 <div class="relative flex w-[30vw] scale-90 mt-2 ">
                   <span class="absolute inset-y-0 flex items-center ">
                     <button
@@ -172,4 +170,4 @@ const ChatContent = () => {
   );
 };
 
-export default ChatContent;
+export default GroupChatContent;

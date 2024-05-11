@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import apiService from "../services/Api";
+import apiService from "../../services/Api";
 import { useSelector, useDispatch } from "react-redux";
-import { setSelectedUser } from "../store/userSlice";
-import { setMessages } from "../store/messageSlice";
+import { setSelectedUser } from "../../store/userSlice";
+import { setMessages } from "../../store/messageSlice";
 
 const OtherUsers = ({ user }) => {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const OtherUsers = ({ user }) => {
     }
   }, [onlineUserData, user.id]);
 
-  console.log(isOnline,user.id)
+  console.log(isOnline, user.id);
 
   function setSelectedUserHandler(user) {
     dispatch(setSelectedUser(user));
@@ -31,7 +31,9 @@ const OtherUsers = ({ user }) => {
       currentUserData.id,
       selectedUser.id
     );
-    dispatch(setMessages(AllMessages.data));
+    if (AllMessages){
+      dispatch(setMessages(AllMessages.data));
+    }
   }
   return (
     <>

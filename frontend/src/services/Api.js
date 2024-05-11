@@ -27,6 +27,18 @@ export class ApiService {
     const result = axios.get(`${Base_URL}/getAllUsers`);
     return result;
   }
+  getAllGroup(){
+    const result = axios.get(`${Base_URL}/getAllGroups`);
+    return result;
+  }
+  sendGroupMessage(message,senderId,GroupId) {
+    const result = axios.post(`${Base_URL}/sendGroupMessage`, { message,senderId,GroupId});
+    return result;
+  }
+  getAllGroupMessages(senderId,GroupId) {
+    const result = axios.post(`${Base_URL}/getAllGroupMessages`,{senderId,GroupId});
+    return result;
+  }
 }
 
 const apiService = new ApiService();

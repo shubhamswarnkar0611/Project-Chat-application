@@ -25,8 +25,8 @@ const Sidebar = () => {
           to={"/"}
           className={({ isActive }) =>
             isActive
-              ? " flex justify-center mb-1  bg-#fdfcf3 text-#1D201D px-[42px] py-[20px] rounded-l-xl"
-              : " flex justify-center mb-1   px-[42px] py-[20px] rounded-l-xl  hover:bg-#fdfcf3 hover:text-#1D201D"
+              ? " flex justify-center mb-1  bg-#fdfcf3 text-#1D201D px-[45px] py-[20px] rounded-l-xl"
+              : " flex justify-center mb-1 px-[42px] py-[20px] rounded-l-xl  hover:bg-#fdfcf3 hover:text-#1D201D"
           }
         >
           <BiChat />
@@ -36,24 +36,24 @@ const Sidebar = () => {
           to={"/group"}
           className={({ isActive }) =>
             isActive
-              ? "mb-1  flex justify-center bg-#fdfcf3 text-#1D201D px-[42px] py-[20px] rounded-l-xl"
+              ? "mb-1  flex justify-center  bg-#fdfcf3 text-#1D201D px-[45px] py-[20px] rounded-l-xl"
               : " flex justify-center mb-1   px-[42px] py-[20px] rounded-l-xl  hover:bg-#fdfcf3 hover:text-#1D201D"
           }
         >
-          <HiMiniUserGroup />
+          <HiMiniUserGroup  />
         </NavLink>
         <NavLink
           to={"/grou"}
           className={({ isActive }) =>
             isActive
-              ? "mb-1 flex justify-center bg-#fdfcf3 text-#1D201D px-[42px] py-[20px] rounded-l-xl"
-              : " flex justify-center mb-1   px-[42px] py-[20px] rounded-l-xl  hover:bg-#fdfcf3 hover:text-#1D201D"
+              ? "mb-1 flex justify-center  bg-#fdfcf3 text-#1D201D px-[45px] py-[20px] rounded-l-xl"
+              : " flex justify-center mb-1  px-[42px] py-[20px] rounded-l-xl  hover:bg-#fdfcf3 hover:text-#1D201D"
           }
         >
           <MdOutlineGroupAdd />
         </NavLink>
         <button
-          className="mb-1  hover:bg-red-500 hover:text-#fdfcf3 px-[41px] py-[20px]  rounded-l-xl"
+          className="mb-1  hover:bg-red-500 hover:text-#fdfcf3 px-[45px] py-[20px]  rounded-l-xl"
           onClick={handleLogout}
         >
           <MdLogout />

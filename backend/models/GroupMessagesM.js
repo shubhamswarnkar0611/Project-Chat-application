@@ -1,9 +1,7 @@
-
-
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/database');
 
-const Message = sequelize.define('Message', {
+const GroupMessage = sequelize.define('GroupMessage', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -17,4 +15,4 @@ const Message = sequelize.define('Message', {
 
 });
 
-module.exports = Message;
+module.exports = GroupMessage;

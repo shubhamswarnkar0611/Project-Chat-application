@@ -1,7 +1,7 @@
 import React from "react";
-import SignUp from "../pages/SignUp";
+// import SignUp from "../pages/SignUp";
 import Login from "../pages/Login";
-import Optverification from "../pages/Optverification";
+// import Optverification from "../pages/Optverification";
 import { PiCodesandboxLogoFill } from "react-icons/pi";
 
 const AuthLayout = () => {

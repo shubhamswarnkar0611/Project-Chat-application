@@ -1,12 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import useGetRealTimeMessage from "../hooks/useGetRealTimeMessage";
+import useGetRealTimeMessage from "../../hooks/useGetRealTimeMessage";
 
-const ChatBubble = ({ message }) => {
-  console.log("mesaage", message.message || message.Message.message);
+const GroupChatBubble = ({ message }) => {
+  console.log("mesaage", message);
   const currentUserData = useSelector((state) => state.user.currentUserDetails);
-  const selectedUserData = useSelector(
-    (state) => state.user.selectedUserDetails
+  const selectedGroupData = useSelector(
+    (state) => state.group.selectedGroupDetails
   );
   
   useGetRealTimeMessage();
@@ -38,7 +38,7 @@ const ChatBubble = ({ message }) => {
               <span className="font-semibold text-#fdfcf3 ml-2 ">You</span>
               <div className=" ml-2 pr-2 flex justify-start items-end  ">
                 <div className="text-stone-400  text-md ">
-                  {message?.message || message?.Message?.message }
+                  {message.content}
                 </div>
               </div>
               <div className="  flex justify-end items-end ">
@@ -62,12 +62,12 @@ const ChatBubble = ({ message }) => {
           >
             <div className="ml-2 font-semibold ">
               <div className=" text-#3C3B34">
-                {selectedUserData.firstName} {selectedUserData.lastName}
+                {`${message?.Sender?.firstName} ${message?.Sender?.lastName}` }
               </div>
             </div>
             <div className=" ml-2 flex items-end justify-start  ">
               <div className="text-stone-600 text-md  ">
-              {message?.message || message?.Message?.message} 
+              {message.content}
               </div>
             </div>
             <div className="  flex justify-end items-end ">
@@ -82,4 +82,4 @@ const ChatBubble = ({ message }) => {
   );
 };
 
-export default ChatBubble;
+export default GroupChatBubble;

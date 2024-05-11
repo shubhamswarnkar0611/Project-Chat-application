@@ -1,5 +1,5 @@
 import React from "react";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import apiService from "../services/Api";
 import { getCurrentUser, setOnlineUser } from "../store/userSlice";

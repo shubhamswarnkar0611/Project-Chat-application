@@ -3,7 +3,7 @@ import { MdEmail, MdLogout, MdPhone } from "react-icons/md";
 import { useSelector,useDispatch } from "react-redux";
 import { setSelectedUser } from "../store/userSlice";
 import { setMessages } from "../store/messageSlice";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 const Rightbar = () => {
   const navigate = useNavigate();

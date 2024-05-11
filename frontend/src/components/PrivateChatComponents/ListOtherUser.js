@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
-import apiService from "../services/Api";
-import { useSelector, useDispatch } from "react-redux";
-import { setSelectedUser } from "../store/userSlice";
-import { setMessages } from "../store/messageSlice";
+import apiService from "../../services/Api.js";
+import { useSelector} from "react-redux";
 import OtherUsers from "./OtherUsers.js";
 
 const ListOtherUser = ({ title }) => {
-  
   const currentUserData = useSelector((state) => state.user.currentUserDetails);
   const [allUsers, setAllUsers] = useState([]);
-  
+
   useEffect(() => {
     async function getAllUserDetails() {
       try {
@@ -22,9 +19,6 @@ const ListOtherUser = ({ title }) => {
     getAllUserDetails();
   }, []);
 
- 
- 
-
   return (
     <div className=" w-[22vw] sha h-[90vh] ml-5 text-stone-600 ">
       <div className="h-[10vh] flex justify-start items-center px-5 bg-#1D201D rounded-2xl shadow-xl">
@@ -36,10 +30,9 @@ const ListOtherUser = ({ title }) => {
             allUsers.map((user) => {
               {
                 if (user.id != currentUserData.id) {
-
                   return (
                     <>
-                     <OtherUsers user={user} />
+                      <OtherUsers user={user} />
                     </>
                   );
                 }

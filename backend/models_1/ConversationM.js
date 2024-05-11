@@ -15,8 +15,7 @@ const Conversation = sequelize.define("Conversation", {
   receiverId: {
     type: Sequelize.INTEGER,
     allowNull: false,
-  },
-
+  }
 });
 
 // Define many-to-many association between Conversation and User
