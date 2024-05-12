@@ -10,7 +10,7 @@ const ListGroups = ({ title }) => {
   useEffect(() => {
     async function fetchGroups() {
       try {
-        const AllGroups = await apiService.getAllGroup();
+        const AllGroups = await apiService.getAllGroup({UserId:currentUserData.id});
         console.log(AllGroups);
         setAllGroups(AllGroups.data);
       } catch (e) {
@@ -32,7 +32,7 @@ const ListGroups = ({ title }) => {
               {
                 return (
                   <>
-                    <GroupItems group={group} key={group.id}/>
+                    <GroupItems group={group?.Group} key={group?.Group?.id}/>
                   </>
                 );
               }

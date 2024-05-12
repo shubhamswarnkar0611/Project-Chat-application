@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const UsersController = require("../controllers/UsersC")
 const fetchUser = require("../middlewares/fetchUser")
+const GroupController = require("../controllers/GroupC")
 
 // Routes
 

@@ -1,13 +1,24 @@
 const Group = require("../models/GroupM");
 const GroupMessage = require("../models/GroupMessagesM");
 const User = require("../models/UsersM");
+const GroupMembership = require("../models/GroupMembershipM");
 
 exports.getAllGroups = async (req, res) => {
+  const { UserId } = req.body;
   try {
-    const groups = await Group.findAll();
-    res.status(200).json(groups);
+    const group = await GroupMembership.findAll({
+      where: UserId,
+      include: [
+        {
+          model: Group,
+        },
+      ],
+    });
+    console.log(group);
+    // const groups = await Group.findAll({where:});
+    res.status(200).json(group);
   } catch (err) {
-    res.status(500).json(err);
+    res.json(err.message);
   }
 };
 
@@ -29,14 +40,26 @@ exports.sendGroupMessage = async (req, res) => {
 
 exports.createGroup = async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name, users } = req.body;
+    console.log(name, users.length);
+    if (users.length < 3)
+      return res.status(501).json("Minmum Three Users required");
+
     const newGroup = await Group.create({
       name,
     });
-    console.log(newGroup, "created");
-    res.status(200).json(newGroup);
+    console.log(newGroup);
+
+    users.map(async (user) => {
+      const newMember = await GroupMembership.create({
+        UserId: user.id,
+        GroupId: newGroup.id,
+      });
+    });
+
+    res.status(200).json(name);
   } catch (e) {
-    res.status(404).json(e);
+    res.json(e.message);
   }
 };
 

@@ -1,0 +1,126 @@
+import React, { useEffect, useState } from "react";
+import { MdGroup } from "react-icons/md";
+import { PiCodesandboxLogoFill } from "react-icons/pi";
+import apiService from "../services/Api";
+import { useSelector, useDispatch } from "react-redux";
+import { setSelectedUserToCreateGroup } from "../store/groupSlice";
+import { ImCross } from "react-icons/im";
+import axios from "axios";
+
+const MakeGroup = () => {
+  const [users, setUsers] = useState([]);
+
+  const dispatch = useDispatch();
+  const { selectedUserIdToCreateGroupData } = useSelector(
+    (store) => store.group
+  );
+
+  useEffect(() => {
+    async function fetchAllUser() {
+      const result = await apiService.getAllUsers();
+      setUsers(result.data);
+    }
+    fetchAllUser();
+  }, []);
+
+  function handleAddUserToGroup(selectedUser) {
+    dispatch(
+      setSelectedUserToCreateGroup([
+        ...selectedUserIdToCreateGroupData,
+        selectedUser,
+      ])
+    );
+  }
+
+  function deleteSelectedUser(selectedUser) {
+    let newArr = selectedUserIdToCreateGroupData.filter(
+      (user) => user !== selectedUser
+    );
+    dispatch(setSelectedUserToCreateGroup(newArr));
+  }
+
+  async function createGroupHandler(e) {
+    e.preventDefault();
+    let name = e.target.groupName.value;
+    try {
+      const group = await axios.post("http://localhost:4000/createGroup", {
+        name,
+        users: selectedUserIdToCreateGroupData,
+      });
+      console.log(group);
+    } catch (err) {
+      console.log("Error creating the Group", err);
+    }
+  }
+  return (
+    <div className="w-[80vw] flex justify-center items-center  h-[100vh] ">
+      <div className=" bg-#1D201D w-[72vw] h-[96vh] rounded-3xl ">
+        <div className="flex ml-44 items-center h-[30vh] w-[59vh]">
+          <PiCodesandboxLogoFill className="text-#fdfcf3 text-2xl mx-2" />
+          <p className="animate-typing overflow-hidden whitespace-nowrap border-r-4 border-r-white pr-5 text-white font-bol font-bold">
+            Create connections, forge bonds, and build communities.
+          </p>
+        </div>
+        <div className="text-neutral-800 h-[90vh] w-[70vw]  rounded-xl  flex justify-center items-start  relative    ">
+          <form onSubmit={(e) => createGroupHandler(e)}>
+            <div className="w-[50vw]  p-6 rounded-3xl  bg-#fdfcf3">
+              <p className="text-4xl font-bold text-#1D201D my-10">
+                Create a Group
+              </p>
+              <div className="flex ">
+                <div className="relative size-full my-7 mx-4">
+                  <input
+                    className="size-full bg-transparent border-2  border-white  rounded-3xl  placeholder:text-neutral-500  py-2 pr-11 pl-5 shadow-sm hover:shadow-md "
+                    type="text"
+                    id="groupName"
+                    placeholder="Enter Unique Group Name"
+                    required
+                  />
+                  <MdGroup className="absolute right-5 bottom-1/4" />
+                </div>
+                <div className="relative size-full  my-7 mx-4">
+                  <select
+                    className="size-full bg-transparent border-2  border-white  rounded-3xl  placeholder:text-neutral-500  py-2  pr-11 pl-5 shadow-sm hover:shadow-md "
+                    onChange={(e) =>
+                      handleAddUserToGroup(JSON.parse(e.target.value))
+                    }
+                  >
+                    <option value="">Select User</option>
+                    {users &&
+                      users.map((user) => (
+                        <option
+                          key={user.id}
+                          value={JSON.stringify(user)}
+                        >{`${user.firstName}  ${user.lastName}`}</option>
+                      ))}
+                  </select>
+                  <div className="flex mx-2 flex-wrap ">
+                    {selectedUserIdToCreateGroupData.map((user) => (
+                      <div className="flex border-[1.5px]  rounded-3xl px-2 py-1 mx-2 mt-2 bg-#1D201D text-#fdfcf3 justify-center items-center h-[4vh] ">
+                        <p className="mr-2 ml-2">{`${user.firstName} ${user.lastName}`}</p>
+                        <button
+                          className="mr-2 text-xs  "
+                          onClick={(e) => deleteSelectedUser(user)}
+                        >
+                          <ImCross className=" hover:text-red-500" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <button
+                className="py-2 px-5  hover:bg-white hover:text-neutral-700  font-bold rounded-full shadow-md bg-#595f39 text-neutral-100 hover:shadow-md hover:shadow-#E4E4DE focus:outline-none focus:ring focus:ring-violet-200 focus:ring-opacity-75 w-[20vw] my-8 mx-52"
+                type="submit"
+              >
+                <p>Create</p>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default MakeGroup;

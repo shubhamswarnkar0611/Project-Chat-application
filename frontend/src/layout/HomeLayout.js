@@ -5,7 +5,7 @@ import apiService from "../services/Api";
 import { getCurrentUser, setOnlineUser } from "../store/userSlice";
 import Sidebar from "../components/Sidebar";
 import Rightbar from "../components/Rightbar";
-import MainContent from "../components/MainContent";
+import { Outlet } from "react-router-dom";
 import { setSocket } from "../store/socketSlice";
 import { io } from "socket.io-client";
 
@@ -55,7 +55,7 @@ const HomeLayout = () => {
   return !isLoading ? (
     <div className="bg-#1D201D h-[100vh] flex ">
       <Sidebar />
-      <MainContent />
+      <Outlet />
       <Rightbar />
     </div>
   ) : (

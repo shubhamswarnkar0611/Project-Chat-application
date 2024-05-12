@@ -43,7 +43,7 @@ const Sidebar = () => {
           <HiMiniUserGroup  />
         </NavLink>
         <NavLink
-          to={"/grou"}
+          to={"/makegroup"}
           className={({ isActive }) =>
             isActive
               ? "mb-1 flex justify-center  bg-#fdfcf3 text-#1D201D px-[45px] py-[20px] rounded-l-xl"

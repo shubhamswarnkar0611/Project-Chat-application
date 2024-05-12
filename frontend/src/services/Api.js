@@ -23,12 +23,13 @@ export class ApiService {
     const result = axios.post(`${Base_URL}/getAllMessage`,{senderId,receiverId});
     return result;
   }
+  
   getAllUsers() {
     const result = axios.get(`${Base_URL}/getAllUsers`);
     return result;
   }
-  getAllGroup(){
-    const result = axios.get(`${Base_URL}/getAllGroups`);
+  getAllGroup({UserId}){
+    const result = axios.post(`${Base_URL}/getAllGroups`,{UserId});
     return result;
   }
   sendGroupMessage(message,senderId,GroupId) {
@@ -39,6 +40,7 @@ export class ApiService {
     const result = axios.post(`${Base_URL}/getAllGroupMessages`,{senderId,GroupId});
     return result;
   }
+
 }
 
 const apiService = new ApiService();

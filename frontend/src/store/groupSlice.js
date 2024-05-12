@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   selectedGroupDetails: null,
+  selectedUserIdToCreateGroupData:[]
 };
 
 const groupSlice = createSlice({
@@ -11,8 +12,11 @@ const groupSlice = createSlice({
     setSelectedGroup: (state, action) => {
       state.selectedGroupDetails = action.payload;
     },
+    setSelectedUserToCreateGroup:(state, action) => {
+        state.selectedUserIdToCreateGroupData = action.payload;
+    }
   },
 });
 
-export const { setSelectedGroup } = groupSlice.actions;
+export const { setSelectedGroup,setSelectedUserToCreateGroup } = groupSlice.actions;
 export default groupSlice.reducer;
