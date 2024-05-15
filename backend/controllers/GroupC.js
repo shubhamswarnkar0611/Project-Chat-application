@@ -2,6 +2,8 @@ const Group = require("../models/GroupM");
 const GroupMessage = require("../models/GroupMessagesM");
 const User = require("../models/UsersM");
 const GroupMembership = require("../models/GroupMembershipM");
+const { getReceiverId, io } = require("../socket/socket-io");
+const { where } = require("sequelize");
 
 exports.getAllGroups = async (req, res) => {
   const { UserId } = req.body;
@@ -14,8 +16,6 @@ exports.getAllGroups = async (req, res) => {
         },
       ],
     });
-    console.log(group);
-    // const groups = await Group.findAll({where:});
     res.status(200).json(group);
   } catch (err) {
     res.json(err.message);
@@ -25,16 +25,42 @@ exports.getAllGroups = async (req, res) => {
 exports.sendGroupMessage = async (req, res) => {
   try {
     const { message, senderId, GroupId } = req.body;
-    console.log(message, senderId, GroupId);
+    if (message === undefined || message === null)
+      return res.status(501).json("Message is required");
     const newMessage = await GroupMessage.create({
       content: message,
       senderId,
       GroupId,
     });
     console.log(newMessage);
-    res.status(200).json(newMessage);
+    const messageDetails = await GroupMessage.findOne({
+      where: {
+        id: newMessage.id,
+      },
+      include:[{
+        model: User,
+        as:"Sender"
+      }]
+    })
+    const groupmember = await GroupMembership.findAll({
+      where: {
+        GroupId,
+      },
+    });
+
+    if (groupmember) {
+      groupmember.map((member) => {
+        if (member.UserId === senderId) return;
+        console.log("memeber", member.UserId);
+        const socketReciverId = getReceiverId(member.UserId);
+        if (socketReciverId) {
+          io.to(socketReciverId).emit("newGroupMessage", messageDetails);
+        }
+      });
+    }
+    res.status(200).json(messageDetails);
   } catch (err) {
-    res.status(500).json(err.message);
+    res.json(err.message);
   }
 };
 
@@ -44,16 +70,14 @@ exports.createGroup = async (req, res) => {
     console.log(name, users.length);
     if (users.length < 3)
       return res.status(501).json("Minmum Three Users required");
-
     const newGroup = await Group.create({
       name,
     });
-    console.log(newGroup);
-
     users.map(async (user) => {
       const newMember = await GroupMembership.create({
         UserId: user.id,
         GroupId: newGroup.id,
+        isAdmin : user.isAdmin
       });
     });
 
@@ -63,7 +87,7 @@ exports.createGroup = async (req, res) => {
   }
 };
 
-exports.getAllGroupMessages = async (req, res) => {
+exports.getGroupMessages = async (req, res) => {
   const { senderId, GroupId } = req.body;
 
   try {
@@ -81,7 +105,6 @@ exports.getAllGroupMessages = async (req, res) => {
         },
       ],
     });
-    console.log("message", result);
 
     res.json(result);
   } catch (error) {
@@ -89,3 +112,24 @@ exports.getAllGroupMessages = async (req, res) => {
     res.status(500).json({ error: "Error retrieving messages" });
   }
 };
+
+exports.getAllMember = async (req, res) => {
+  const { GroupId } = req.body;
+  try {
+    
+    const allMember = await GroupMembership.findAll({
+      where:{
+        GroupId
+      },
+      include:[{
+        model:User,
+      }],
+    })
+
+    res.status(200).json(allMember)
+
+  }catch(error){
+    console.error("Error retrieving messages:", error.message);
+    res.status(500).json({ error: "Error retrieving messages" });
+  }
+}

@@ -51,6 +51,7 @@ GroupMessage.belongsTo(Group, { onDelete: "CASCADE" });
 User.belongsToMany(Group, { through: GroupMembership });
 Group.belongsToMany(User, { through: GroupMembership });
 GroupMembership.belongsTo(Group)
+GroupMembership.belongsTo(User)
 
 // Database Synchronization
 sequelize

@@ -1,21 +1,56 @@
 import React, { useState } from "react";
 import { FaLock, FaUser } from "react-icons/fa";
-import { MdEmail, MdPhone } from "react-icons/md";
+import { MdAddCircle, MdEmail, MdPhone } from "react-icons/md";
 import apiService from "../services/Api";
 import { PiCodesandboxLogoFill } from "react-icons/pi";
-import { Link,useNavigate } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-    const navigate =useNavigate();
-
+  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({
     firstName: "",
     lastName: "",
+    picture: "",
     email: "",
     phone: null,
     password: "",
   });
+  // for image purposes
+  const [image, setImage] = useState(null);
+  const [upladingImg, setUploadingImg] = useState(false);
+  const [imagePreview, setImagePreview] = useState(null);
+
+  function validateImg(e) {
+    const file = e.target.files[0];
+    if (file.size >= 1048576) {
+      return alert("Max file size is 1mb");
+    } else {
+      setImage(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
+  }
+
+  async function uploadImage() {
+    const data = new FormData();
+    data.append("file", image);
+    data.append("upload_preset", "myCloud");
+    try {
+      setUploadingImg(true);
+      let res = await fetch(
+        "https://api.cloudinary.com/v1_1/dmwofcajz/image/upload",
+        {
+          method: "post",
+          body: data,
+        }
+      );
+      const urlData = await res.json();
+      setUploadingImg(false);
+      return urlData.url;
+    } catch (error) {
+      setUploadingImg(false);
+      console.log(error);
+    }
+  }
 
   function handleInputChange(e) {
     e.preventDefault();
@@ -26,10 +61,13 @@ const SignUp = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
+      if (!image) return alert("Please upload your profile picture");
+      const url = await uploadImage(image);
+      setUserInfo({ ...userInfo, picture: url });
+      console.log(userInfo);
       const result = await apiService.signup(userInfo);
       localStorage.setItem("token", result.data);
-      navigate("/")
-
+      navigate("/");
     } catch (e) {
       console.log(e.response);
     }
@@ -53,6 +91,29 @@ const SignUp = () => {
         <form onSubmit={handleSubmit}>
           <div className="w-[27vw]  p-6 rounded-lg ">
             <h1 className="text-4xl text-center font-bold my-8">Sign-Up</h1>
+            <div className="flex justify-center">
+              <label htmlFor="image-upload" className="relative">
+                <div className="relative w-[5vw] h-[10vh]  border-4 border-#1D201D rounded-full overflow-hidden">
+                  <img
+                    alt=""
+                    src={imagePreview}
+                    className="w-full h-full object-cover"
+                  />
+                  {imagePreview ? null : (
+                    <div className="absolute bottom-3 right-1 flex justify-center items-center">
+                      <MdAddCircle className="text-xl text-lime-500" />
+                    </div>
+                  )}
+                </div>
+              </label>
+              <input
+                type="file"
+                id="image-upload"
+                hidden
+                accept="image/png, image/jpeg"
+                onChange={validateImg}
+              />
+            </div>
             <div className="flex justify-between my-6 ">
               <div className="relative size-full w-[20vw]  ">
                 <input

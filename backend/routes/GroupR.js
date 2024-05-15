@@ -7,6 +7,7 @@ const GroupController = require("../controllers/GroupC")
 router.post('/getAllGroups',GroupController.getAllGroups)
 router.post('/sendGroupMessage',GroupController.sendGroupMessage)
 router.post('/createGroup',GroupController.createGroup)
-router.post('/getAllGroupMessages',GroupController.getAllGroupMessages)
+router.post('/getGroupMessages',GroupController.getGroupMessages)
+router.post('/getAllMember',GroupController.getAllMember)
 
 module.exports=router

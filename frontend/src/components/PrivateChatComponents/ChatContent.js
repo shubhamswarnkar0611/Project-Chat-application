@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import ChatBubble from "./ChatBubble";
 import apiService from "../../services/Api";
@@ -14,7 +14,9 @@ const ChatContent = () => {
     (state) => state.user.selectedUserDetails
   );
 
+
   const getmessage = useSelector((state) => state.message.message);
+
 
   async function handleMesssage(e) {
     e.preventDefault();
@@ -43,13 +45,13 @@ const ChatContent = () => {
   }
 
   return (
-    <div className="  w-[67vw]  rounded-2xl h-[89vh] mx-4">
+    <div className="  lg:w-[67vw] w-[95vw] rounded-2xl lg:h-[89vh] mx-4">
       {selectedUserData && (
         <>
-          <div className="h-[10vh] rounded-xl flex items-center justify-between px-4 ">
+          <div className="lg:h-[10vh] h-[8vh] rounded-xl flex items-center justify-between px-4  ">
             <div className="flex items-center">
               <img
-                src="https://i.imgur.com/rT6iLKV.jpeg"
+                src={selectedUserData.picture}
                 width="40"
                 height="40"
                 className="rounded-full"
@@ -64,8 +66,8 @@ const ChatContent = () => {
             </div>
           </div>
 
-          <div className="h-[78vh] mt-3  ">
-            <ScrollToBottom className="h-[70vh] mx-4  p-4">
+          <div className="lg:h-[78vh]   ">
+            <ScrollToBottom className="lg:h-[70vh] h-[48vh] mx-4  p-4">
               <div class="flex w-full flex-col gap-4 ">
                 {getmessage &&
                   getmessage.map((message) => {
@@ -76,8 +78,8 @@ const ChatContent = () => {
 
             <div className="flex justify-center">
               <form onSubmit={handleMesssage}>
-                <div class="relative flex w-[30vw] scale-90 mt-2 ">
-                  <span class="absolute inset-y-0 flex items-center ">
+                <div class="relative flex lg:w-[30vw]  scale-90 mt-2 ">
+                  <span class="absolute inset-y-0 flex items-center  ">
                     <button
                       type="button"
                       class="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none"
@@ -107,7 +109,7 @@ const ChatContent = () => {
                     value={message}
                     required
                   />
-                  <div class="absolute right-0 items-center inset-y-0 hidden sm:flex">
+                  <div class="absolute right-0 justify-center items-center inset-y-0  sm:flex">
                     <button
                       type="button"
                       class="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none"
@@ -149,7 +151,7 @@ const ChatContent = () => {
                     </button>
                     <button
                       type="submit"
-                      class="inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-100 ease-in-out text-white bg-#595f39 hover:bg-#1D201D focus:outline-none"
+                      class="inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-100 ease-in-out text-white bg-#595f39 hover:bg-#1D201D focus:outline-none "
                     >
                       <span class="font-bold">Send</span>
                       <svg

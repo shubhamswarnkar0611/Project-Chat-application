@@ -1,8 +1,9 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectedGroup } from "../../store/groupSlice";
+import { setGroupMembers, setSelectedGroup } from "../../store/groupSlice";
 import { setMessages } from "../../store/messageSlice";
 import apiService from "../../services/Api";
+import { setGroupMessage } from "../../store/groupMessageSlice";
 
 const GroupItems = ({ group }) => {
   let AllMessages = [];
@@ -13,6 +14,7 @@ const GroupItems = ({ group }) => {
   function handleSelectedGroup(group) {
     dispatch(setSelectedGroup(group));
     fetchMessages(group);
+    fetchAllMembers(group)
   }
   async function fetchMessages(selectedGroup) {
     try {
@@ -22,9 +24,22 @@ const GroupItems = ({ group }) => {
       );
       console.log(AllMessages,"working")
         if (AllMessages) {
-          dispatch(setMessages(AllMessages.data));
+          dispatch(setGroupMessage(AllMessages.data));
         }
     } catch (err) {
+      console.log(err.message);
+    }
+  }
+
+  async function fetchAllMembers({id}) {
+    try {
+      const members = await apiService.getAllMember(id);
+      console.log(members.data,"members")
+      if(members){
+        dispatch(setGroupMembers(members.data));
+      }
+
+    }catch(err){
       console.log(err.message);
     }
   }
@@ -32,7 +47,7 @@ const GroupItems = ({ group }) => {
     <>
       <li
         onClick={() => handleSelectedGroup(group)}
-        class={`flex justify-between items-center py-3 px-2 hover:shadow-2xl rounded-2xl cursor-pointer transition ${
+        class={`flex justify-between items-center py-3 px-2 hover:shadow-2xl rounded-2xl cursor-pointer w-[270px] transition  hover:bg-#373730 hover:text-#fdfcf3 mx-1 ${
           selectedGroupDetails && selectedGroupDetails.id === group.id
             ? "bg-neutral-800 text-#fdfcf3 "
             : "text-#3C3B34"

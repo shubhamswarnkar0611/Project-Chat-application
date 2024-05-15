@@ -4,9 +4,9 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRETE = "$ecreteHai";
 
 exports.signup = async (req, res) => {
-  const { firstName, lastName, email, phone, password } = req.body;
-  console.log("shubham : ", req.body);
-  if (!firstName || !email || !password || !phone)
+  const { firstName, lastName, email, phone, password, picture } = req.body;
+  console.log(picture);
+  if (!firstName || !email || !password || !phone || !picture)
     return res.status(404).json("Please fill all required fields");
   try {
     const salt = await bcrypt.genSalt(10);
@@ -14,9 +14,11 @@ exports.signup = async (req, res) => {
     const result = await Users.create({
       firstName: firstName,
       lastName: lastName,
+      picture:picture,
       email: email,
       phone: phone,
       password: hashPassword,
+
     });
     const authToken = jwt.sign({ userId: result.id }, JWT_SECRETE);
     res.status(200).json(authToken);

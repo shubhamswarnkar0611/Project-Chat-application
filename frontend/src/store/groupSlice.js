@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { setGroupMessage } from "./groupMessageSlice";
 
 const initialState = {
   selectedGroupDetails: null,
-  selectedUserIdToCreateGroupData:[]
+  selectedUserIdToCreateGroupData:[],
+  groupMember:null
 };
 
 const groupSlice = createSlice({
@@ -14,9 +16,12 @@ const groupSlice = createSlice({
     },
     setSelectedUserToCreateGroup:(state, action) => {
         state.selectedUserIdToCreateGroupData = action.payload;
+    },
+    setGroupMembers:(state, action) => {
+        state.groupMember = action.payload;
     }
   },
 });
 
-export const { setSelectedGroup,setSelectedUserToCreateGroup } = groupSlice.actions;
+export const { setSelectedGroup,setSelectedUserToCreateGroup,setGroupMembers } = groupSlice.actions;
 export default groupSlice.reducer;

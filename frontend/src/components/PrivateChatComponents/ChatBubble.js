@@ -13,17 +13,33 @@ const ChatBubble = ({ message }) => {
   useGetRealTimeMessage();
 
   function formatTime(timestamp) {
-    const date = new Date(timestamp);
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const hours12 = hours % 12 === 0 ? 12 : hours % 12;
-    const period = hours < 12 ? "AM" : "PM";
-    const formattedTime = `${hours12}:${
-      minutes < 10 ? "0" : ""
-    }${minutes} ${period}`;
+    const currentDate = new Date();
+    const messageDate = new Date(timestamp);
 
-    return formattedTime;
-  }
+   
+    const diffInMilliseconds = currentDate.getTime() - messageDate.getTime();
+    const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
+
+    if (diffInMinutes < 1) {
+        return "Just now";
+    } else if (diffInMinutes === 1) {
+        return "1 min ago";
+    } else if (diffInMinutes < 60) {
+        return `${diffInMinutes} mins ago`;
+    } else if (diffInMinutes < 24 * 60) {
+        const hours = Math.floor(diffInMinutes / 60);
+        return `${hours} ${hours === 1 ? "hour" : "hours"} ago`;
+    } else if (diffInMinutes < 30 * 24 * 60) {
+        const days = Math.floor(diffInMinutes / (60 * 24));
+        return `${days} ${days === 1 ? "day" : "days"} ago`;
+    } else if (diffInMinutes < 365 * 24 * 60) {
+        const months = Math.floor(diffInMinutes / (30 * 24 * 60));
+        return `${months} ${months === 1 ? "month" : "months"} ago`;
+    } else {
+        const years = Math.floor(diffInMinutes / (365 * 24 * 60));
+        return `${years} ${years === 1 ? "year" : "years"} ago`;
+    }
+}
 
   if (!message) {
     return null; // Render nothing if message is undefined
@@ -36,7 +52,7 @@ const ChatBubble = ({ message }) => {
             <div
               className={`flex max-w-[80%] min-w-[20%] flex-col rounded-l-2xl rounded-tr-2xl shadow-md bg-#1D201D p-2 md:max-w-[60%] mb-6 mx-3 `}
             >
-              <span className="font-semibold text-#fdfcf3 ml-2 ">You</span>
+              {/* <span className="font-semibold text-#fdfcf3 ml-2 ">You</span> */}
               <div className=" ml-2 pr-2 flex justify-start items-end  ">
                 <div className="text-stone-400  text-md ">
                   {message.content}

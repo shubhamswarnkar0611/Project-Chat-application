@@ -14,33 +14,50 @@ export class ApiService {
     const result = axios.post(`${Base_URL}/getUserData`, { token });
     return result;
   }
-  sendMessage(message,senderId,receiverId) {
-    const result = axios.post(`${Base_URL}/sendMessage`, { message,senderId,receiverId});
+  sendMessage(message, senderId, receiverId) {
+    const result = axios.post(`${Base_URL}/sendMessage`, {
+      message,
+      senderId,
+      receiverId,
+    });
     return result;
   }
 
-  getAllMessages(senderId,receiverId) {
-    const result = axios.post(`${Base_URL}/getAllMessage`,{senderId,receiverId});
+  getAllMessages(senderId, receiverId) {
+    const result = axios.post(`${Base_URL}/getAllMessage`, {
+      senderId,
+      receiverId,
+    });
     return result;
   }
-  
+
   getAllUsers() {
     const result = axios.get(`${Base_URL}/getAllUsers`);
     return result;
   }
-  getAllGroup({UserId}){
-    const result = axios.post(`${Base_URL}/getAllGroups`,{UserId});
+  getAllGroup({ UserId }) {
+    const result = axios.post(`${Base_URL}/getAllGroups`, { UserId });
     return result;
   }
-  sendGroupMessage(message,senderId,GroupId) {
-    const result = axios.post(`${Base_URL}/sendGroupMessage`, { message,senderId,GroupId});
+  sendGroupMessage(message, senderId, GroupId) {
+    const result = axios.post(`${Base_URL}/sendGroupMessage`, {
+      message,
+      senderId,
+      GroupId,
+    });
     return result;
   }
-  getAllGroupMessages(senderId,GroupId) {
-    const result = axios.post(`${Base_URL}/getAllGroupMessages`,{senderId,GroupId});
+  getAllGroupMessages(senderId, GroupId) {
+    const result = axios.post(`${Base_URL}/getGroupMessages`, {
+      senderId,
+      GroupId,
+    });
     return result;
   }
-
+  getAllMember(GroupId) {
+    const result = axios.post(`${Base_URL}/getAllMember`, { GroupId });
+    return result;
+  }
 }
 
 const apiService = new ApiService();

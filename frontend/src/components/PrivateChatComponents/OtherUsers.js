@@ -31,7 +31,7 @@ const OtherUsers = ({ user }) => {
       currentUserData.id,
       selectedUser.id
     );
-    if (AllMessages){
+    if (AllMessages) {
       dispatch(setMessages(AllMessages.data));
     }
   }
@@ -39,7 +39,7 @@ const OtherUsers = ({ user }) => {
     <>
       <li
         onClick={() => setSelectedUserHandler(user)}
-        class={`flex justify-between items-center py-3 px-2 hover:shadow-2xl rounded-2xl cursor-pointer transition ${
+        class={`flex justify-between items-center py-3 px-2 hover:shadow-2xl rounded-2xl cursor-pointer w-[270px] transition  hover:bg-#373730 hover:text-#fdfcf3 mx-1  ${
           selectedUserData === user
             ? "bg-neutral-800 text-#fdfcf3 "
             : "text-#3C3B34"
@@ -48,10 +48,8 @@ const OtherUsers = ({ user }) => {
         <div class="flex ">
           <div class="relative me-4">
             <img
-              src="https://i.imgur.com/aq39RMA.jpg"
-              width="40"
-              height="40"
-              class={`rounded-full border-2 `}
+              src={user.picture}
+              class={`rounded-full border-2  w-[2.5vw] h-[5vh]  object-cover `}
             />
             {isOnline ? (
               <span class="top-0 start-7 absolute w-2.5 h-2.5 bg-green-500  rounded-full"></span>
@@ -60,7 +58,7 @@ const OtherUsers = ({ user }) => {
             )}
           </div>
 
-          <div class="flex flex-col ml-2">
+          <div class="flex flex-col ">
             <span class="font-medium  ">
               {user.firstName} {user.lastName}
             </span>

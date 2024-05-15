@@ -1,7 +1,7 @@
 const Message = require("../models/MessagesM");
 const User = require("../models/UsersM");
 const { Op } = require("sequelize");
-const { io } = require("../socket/socket-io");
+const { io, getReceiverId } = require("../socket/socket-io");
 
 exports.sendMessage = async (req, res) => {
   const { message, senderId, receiverId } = req.body;

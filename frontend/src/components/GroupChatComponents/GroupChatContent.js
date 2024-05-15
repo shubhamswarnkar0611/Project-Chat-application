@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import ScrollToBottom from "react-scroll-to-bottom";
 import { setMessages } from "../../store/messageSlice";
 import GroupChatBubble from "./GroupChatBubble";
+import { setGroupMessage } from "../../store/groupMessageSlice";
 
 const GroupChatContent = () => {
   const dispatch=useDispatch()
@@ -13,20 +14,20 @@ const GroupChatContent = () => {
   const selectedGroupData = useSelector(
     (state) => state.group.selectedGroupDetails
   );
-  const getmessage = useSelector((state) => state.message.message);
+  const getmessage = useSelector((state) => state.groupMessage.GroupMessage);
+
+  
+
 
   async function sendMesssageHandler(e) {
     e.preventDefault();
-    console.log(message, currentUserData.id, selectedGroupData.id);
     try {
       const Message = await apiService.sendGroupMessage(
         message,
         currentUserData.id,
         selectedGroupData.id
       );
-      console.log(Message,"working")
-
-      dispatch(setMessages([...getmessage, Message.data]))
+      dispatch(setGroupMessage([...getmessage, Message.data]))
     } catch (e) {
       console.log(e)
     } finally {
@@ -41,10 +42,10 @@ const GroupChatContent = () => {
   }
 
   return (
-    <div className="  w-[67vw]  rounded-2xl h-[89vh] mx-4">
+    <div className=" lg:w-[67vw] w-[95vw] rounded-2xl lg:h-[89vh] mx-4">
       {selectedGroupData && (
         <>
-          <div className="h-[10vh] rounded-xl flex items-center justify-between px-4 ">
+          <div className="lg:h-[10vh] h-[8vh] rounded-xl flex items-center justify-between px-4 ">
             <div className="flex items-center">
               <img
                 src="https://i.imgur.com/rT6iLKV.jpeg"
@@ -62,8 +63,8 @@ const GroupChatContent = () => {
             </div>
           </div>
 
-          <div className="h-[78vh] mt-3  ">
-            <ScrollToBottom className="h-[70vh] mx-4  p-4">
+          <div className="lg:h-[78vh] ">
+            <ScrollToBottom className="lg:h-[70vh] h-[48vh] mx-4  p-4">
               <div class="flex w-full flex-col gap-4 ">
                 {getmessage &&
                   getmessage.map((message) => {
@@ -74,7 +75,7 @@ const GroupChatContent = () => {
 
             <div className="flex justify-center">
               <form onSubmit={sendMesssageHandler}>
-                <div class="relative flex w-[30vw] scale-90 mt-2 ">
+                <div class="relative flex lg:w-[30vw]  scale-90 mt-2  ">
                   <span class="absolute inset-y-0 flex items-center ">
                     <button
                       type="button"
@@ -105,7 +106,7 @@ const GroupChatContent = () => {
                     value={message}
                     required
                   />
-                  <div class="absolute right-0 items-center inset-y-0 hidden sm:flex">
+                  <div class="absolute right-0 justify-center items-center inset-y-0  sm:flex">
                     <button
                       type="button"
                       class="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none"

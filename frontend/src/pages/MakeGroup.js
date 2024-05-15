@@ -11,6 +11,7 @@ const MakeGroup = () => {
   const [users, setUsers] = useState([]);
 
   const dispatch = useDispatch();
+  const currentUserData = useSelector((state) => state.user.currentUserDetails);
   const { selectedUserIdToCreateGroupData } = useSelector(
     (store) => store.group
   );
@@ -24,12 +25,22 @@ const MakeGroup = () => {
   }, []);
 
   function handleAddUserToGroup(selectedUser) {
-    dispatch(
-      setSelectedUserToCreateGroup([
-        ...selectedUserIdToCreateGroupData,
-        selectedUser,
-      ])
-    );
+    if ((selectedUser.id === currentUserData.id)) {
+      dispatch(
+        setSelectedUserToCreateGroup([
+          ...selectedUserIdToCreateGroupData,
+          { ...selectedUser, isAdmin: true }
+        ])
+      );
+
+    } else {
+      dispatch(
+        setSelectedUserToCreateGroup([
+          ...selectedUserIdToCreateGroupData,
+          { ...selectedUser, isAdmin: false }
+        ])
+      );
+    }
   }
 
   function deleteSelectedUser(selectedUser) {
@@ -54,20 +65,20 @@ const MakeGroup = () => {
   }
   return (
     <div className="w-[80vw] flex justify-center items-center  h-[100vh] ">
-      <div className=" bg-#1D201D w-[72vw] h-[96vh] rounded-3xl ">
-        <div className="flex ml-44 items-center h-[30vh] w-[59vh]">
+      <div className=" bg-#1D201D w-[72vw] lg:h-[96vh] rounded-3xl ">
+        <div className="flex lg:ml-44 items-center h-[10vh] lg:h-[30vh] lg:w-[59vh]">
           <PiCodesandboxLogoFill className="text-#fdfcf3 text-2xl mx-2" />
           <p className="animate-typing overflow-hidden whitespace-nowrap border-r-4 border-r-white pr-5 text-white font-bol font-bold">
             Create connections, forge bonds, and build communities.
           </p>
         </div>
-        <div className="text-neutral-800 h-[90vh] w-[70vw]  rounded-xl  flex justify-center items-start  relative    ">
+        <div className="text-neutral-800  lg:h-[30vh] w-[70vw]  rounded-xl  flex justify-center items-start  relative    ">
           <form onSubmit={(e) => createGroupHandler(e)}>
-            <div className="w-[50vw]  p-6 rounded-3xl  bg-#fdfcf3">
+            <div className="lg:w-[50vw] w-[90vw] h-[68vh] lg:h-[50vh]  p-6 rounded-3xl  bg-#fdfcf3 flex flex-col items-center lg:block ">
               <p className="text-4xl font-bold text-#1D201D my-10">
                 Create a Group
               </p>
-              <div className="flex ">
+              <div className="flex lg:flex-row flex-col ">
                 <div className="relative size-full my-7 mx-4">
                   <input
                     className="size-full bg-transparent border-2  border-white  rounded-3xl  placeholder:text-neutral-500  py-2 pr-11 pl-5 shadow-sm hover:shadow-md "
@@ -80,7 +91,7 @@ const MakeGroup = () => {
                 </div>
                 <div className="relative size-full  my-7 mx-4">
                   <select
-                    className="size-full bg-transparent border-2  border-white  rounded-3xl  placeholder:text-neutral-500  py-2  pr-11 pl-5 shadow-sm hover:shadow-md "
+                    className="size-full bg-transparent border-2  border-white  rounded-3xl  placeholder:text-neutral-500  py-2  pr-11 pl-5 shadow-sm hover:shadow-md h-[5vh] "
                     onChange={(e) =>
                       handleAddUserToGroup(JSON.parse(e.target.value))
                     }

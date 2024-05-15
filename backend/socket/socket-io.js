@@ -27,6 +27,11 @@ io.on("connection", (socket) => {
 
   io.emit("getOnlineUser", Object.keys(userSocketMap));
 
+  // socket.on("typing",(socket) => {
+  //   console.log("typing", socket.id);
+  //   io.to(socket.id).emit("typing", socket.id)
+  // })
+
   // Use the built-in 'disconnect' event to handle disconnections
   socket.on("disconnect", () => {
     console.log("user disconnected", socket.id);

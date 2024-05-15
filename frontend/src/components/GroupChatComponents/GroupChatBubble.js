@@ -3,29 +3,41 @@ import { useSelector } from "react-redux";
 import useGetRealTimeMessage from "../../hooks/useGetRealTimeMessage";
 
 const GroupChatBubble = ({ message }) => {
-  console.log("mesaage", message);
   const currentUserData = useSelector((state) => state.user.currentUserDetails);
-  const selectedGroupData = useSelector(
-    (state) => state.group.selectedGroupDetails
-  );
-  
+
   useGetRealTimeMessage();
 
   function formatTime(timestamp) {
-    const date = new Date(timestamp);
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const hours12 = hours % 12 === 0 ? 12 : hours % 12;
-    const period = hours < 12 ? "AM" : "PM";
-    const formattedTime = `${hours12}:${
-      minutes < 10 ? "0" : ""
-    }${minutes} ${period}`;
+    const currentDate = new Date();
+    const messageDate = new Date(timestamp);
 
-    return formattedTime;
-  }
+    // Calculate the difference in minutes
+    const diffInMilliseconds = currentDate.getTime() - messageDate.getTime();
+    const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
+
+    if (diffInMinutes < 1) {
+        return "Just now";
+    } else if (diffInMinutes === 1) {
+        return "1 min ago";
+    } else if (diffInMinutes < 60) {
+        return `${diffInMinutes} mins ago`;
+    } else if (diffInMinutes < 24 * 60) {
+        const hours = Math.floor(diffInMinutes / 60);
+        return `${hours} ${hours === 1 ? "hour" : "hours"} ago`;
+    } else if (diffInMinutes < 30 * 24 * 60) {
+        const days = Math.floor(diffInMinutes / (60 * 24));
+        return `${days} ${days === 1 ? "day" : "days"} ago`;
+    } else if (diffInMinutes < 365 * 24 * 60) {
+        const months = Math.floor(diffInMinutes / (30 * 24 * 60));
+        return `${months} ${months === 1 ? "month" : "months"} ago`;
+    } else {
+        const years = Math.floor(diffInMinutes / (365 * 24 * 60));
+        return `${years} ${years === 1 ? "year" : "years"} ago`;
+    }
+}
 
   if (!message) {
-    return null; // Render nothing if message is undefined
+    return null;
   }
   return (
     <>
@@ -62,13 +74,11 @@ const GroupChatBubble = ({ message }) => {
           >
             <div className="ml-2 font-semibold ">
               <div className=" text-#3C3B34">
-                {`${message?.Sender?.firstName} ${message?.Sender?.lastName}` }
+                {`${message?.Sender?.firstName} ${message?.Sender?.lastName}`}
               </div>
             </div>
             <div className=" ml-2 flex items-end justify-start  ">
-              <div className="text-stone-600 text-md  ">
-              {message.content}
-              </div>
+              <div className="text-stone-600 text-md  ">{message.content}</div>
             </div>
             <div className="  flex justify-end items-end ">
               <div className="scale-75 text-neutral-600 ">

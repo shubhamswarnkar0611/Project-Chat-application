@@ -53,7 +53,7 @@ const HomeLayout = () => {
   }, []);
 
   return !isLoading ? (
-    <div className="bg-#1D201D h-[100vh] flex ">
+    <div className="bg-#1D201D h-[100vh] flex lg:flex-row flex-col items-center ">
       <Sidebar />
       <Outlet />
       <Rightbar />
