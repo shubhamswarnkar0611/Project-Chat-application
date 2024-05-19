@@ -3,8 +3,10 @@ import { setGroupMessage } from "./groupMessageSlice";
 
 const initialState = {
   selectedGroupDetails: null,
-  selectedUserIdToCreateGroupData:[],
-  groupMember:null
+  selectedUserIdToCreateGroupData: [],
+  groupMember: null,
+  currentUserIsAdmin: false,
+  remainingUsers: null,
 };
 
 const groupSlice = createSlice({
@@ -14,14 +16,26 @@ const groupSlice = createSlice({
     setSelectedGroup: (state, action) => {
       state.selectedGroupDetails = action.payload;
     },
-    setSelectedUserToCreateGroup:(state, action) => {
-        state.selectedUserIdToCreateGroupData = action.payload;
+    setSelectedUserToCreateGroup: (state, action) => {
+      state.selectedUserIdToCreateGroupData = action.payload;
     },
-    setGroupMembers:(state, action) => {
-        state.groupMember = action.payload;
+    setGroupMembers: (state, action) => {
+      state.groupMember = action.payload;
+    },
+    setCurrentUserIsAdmin: (state, action) => {
+      state.currentUserIsAdmin = action.payload;
+    },
+    setReaminingUser: (state, action) => {
+      state.remainingUsers = action.payload;
     }
   },
 });
 
-export const { setSelectedGroup,setSelectedUserToCreateGroup,setGroupMembers } = groupSlice.actions;
+export const {
+  setSelectedGroup,
+  setSelectedUserToCreateGroup,
+  setGroupMembers,
+  setCurrentUserIsAdmin,
+  setReaminingUser
+} = groupSlice.actions;
 export default groupSlice.reducer;

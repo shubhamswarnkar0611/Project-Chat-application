@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { FaLock} from "react-icons/fa";
+import toast, { Toaster } from "react-hot-toast";
+import { FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { PiCodesandboxLogoFill } from "react-icons/pi";
 import { Link, useNavigate } from "react-router-dom";
 import apiService from "../services/Api";
 
 const Login = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [loginDetails, setLoginDetails] = useState({
     email: "",
     password: "",
@@ -17,22 +19,25 @@ const Login = () => {
     setLoginDetails({ ...loginDetails, [id]: value });
   }
 
- async function handleLogin(e){
+  async function handleLogin(e) {
     e.preventDefault();
-    try{
-        const result=await apiService.login(loginDetails)
-        console.log(result.data);
-        localStorage.setItem("token", result.data);
-        navigate("/")
-    }catch(e){
-        console.log(e.response.data);
+    try {
+      setIsLoading(true);
+      const result = await apiService.login(loginDetails);
+      console.log(result.data);
+      localStorage.setItem("token", result.data);
+      navigate("/");
+    } catch (e) {
+      toast.error(e.response.data);
+    }finally{
+      setIsLoading(false);
     }
-
- }
+  }
 
   return (
-    <div className="flex justify-evenly items-center h-[100vh]  ">
-      <div className="h-[95vh] w-[30vw] bg-neutral-900 rounded-xl flex justify-center items-center">
+    <div className="flex flex-col lg:flex-row justify-evenly items-center h-[100vh]   ">
+    <Toaster/>
+      <div className="lg:h-[95vh] h-[40vh] w-[98vw] lg:w-[35vw] bg-neutral-900 rounded-xl flex justify-center items-center my-1">
         <div className="">
           <span className="text-3xl text-white font-bold flex items-center ">
             <PiCodesandboxLogoFill />
@@ -43,10 +48,10 @@ const Login = () => {
           </p>
         </div>
       </div>
-      <div className="text-neutral-800 h-[90vh] w-[40vw]  rounded-xl  flex justify-center items-center  relative px-8 py-10   ">
+      <div className="text-neutral-800 h-[90vh] w-[80vw] lg:w-[45vw]  rounded-xl  flex justify-center lg:items-center  relative px-8 py-10    ">
         <form onSubmit={handleLogin}>
-          <div className="w-[27vw]  p-6 rounded-lg ">
-            <h1 className="text-4xl text-center font-bold my-8">Login</h1>
+          <div className="lg:w-[27vw] w-[80vw] md:w-[50vw]  p-6 rounded-lg ">
+            <h1 className="text-4xl text-center font-bold lg:my-8">Login</h1>
 
             <div className="relative size-full  my-7">
               <input
@@ -76,7 +81,7 @@ const Login = () => {
               className="py-2 px-5 hover:bg-white hover:text-neutral-700  font-bold rounded-full shadow-md bg-#595f39 text-neutral-100 hover:shadow-md hover:shadow-#E4E4DE focus:outline-none focus:ring focus:ring-violet-200 focus:ring-opacity-75 w-full my-8"
               type="submit"
             >
-              <p>Login</p>
+              {!isLoading ? <p>Login</p> : <p>Please Wait </p>}
             </button>
             <div className="text-center text-sm ">
               <p>

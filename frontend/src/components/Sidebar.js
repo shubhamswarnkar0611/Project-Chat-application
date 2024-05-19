@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useCallback } from "react";
+import { FaBarsStaggered } from "react-icons/fa6";
 import { NavLink, useNavigate } from "react-router-dom";
 import { BiChat } from "react-icons/bi";
 import { HiMiniUserGroup } from "react-icons/hi2";
@@ -7,30 +8,34 @@ import { PiCodesandboxLogoFill } from "react-icons/pi";
 import { useSelector, useDispatch } from "react-redux";
 import { setMessages } from "../store/messageSlice";
 import { setGroupMembers } from "../store/groupSlice";
-const Sidebar = () => {
+const Sidebar = ({ toggleRightBar }) => {
   const navigate = useNavigate();
-  const dispatch =useDispatch();
+  const dispatch = useDispatch();
   function handleLogout() {
     localStorage.removeItem("token");
-    dispatch(setMessages(null))
+    dispatch(setMessages(null));
     navigate("/login");
   }
-  function handleResetMessage() {
-    dispatch(setMessages(null))
-    dispatch(setGroupMembers(null))
-  }
+  const handleResetMessage = useCallback(() => {
+    dispatch(setMessages(null));
+  }, []);
 
   return (
-    <div className="lg:w-[10vw] h-[20vh] w-[100vw] lg:h-[100vh] text-#fdfcf3 flex-col flex  items-center">
-      <div className="text-3xl font-bold h-[7vh] lg:h-[25vh] lg:my-10 lg:flex-col flex  lg:items-center lg:w-[5vw] mt-4 ">
-        <div className=" scale-110 mx-1 ">
+    <div className="lg:w-[40] h-[20vh] w-[100vw] lg:h-[100vh] text-#fdfcf3 flex-col flex  items-center">
+      <div className="text-3xl font-bold h-[7vh] lg:h-[25vh] lg:my-10 lg:flex-col flex justify-between w-[95vw] lg:items-center lg:w-[5vw] mt-4 ">
+        <div className=" scale-110 flex justify-center lg:flex-col lg:items-center ">
           <PiCodesandboxLogoFill />
+          <p className="text-sm ml-2">ChatEase™</p>
         </div>
-        <p className="text-sm">ChatEase™</p>
+        <div className="lg:hidden text-2xl ">
+          <button onClick={toggleRightBar} className="text-2xl">
+            <FaBarsStaggered />
+          </button>
+        </div>
       </div>
       <div className="text-2xl scale-125 flex lg:block ">
         <NavLink
-          onClick={handleResetMessage()}
+          onClick={handleResetMessage}
           to={"/"}
           className={({ isActive }) =>
             isActive

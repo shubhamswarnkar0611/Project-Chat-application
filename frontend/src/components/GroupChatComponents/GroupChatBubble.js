@@ -16,25 +16,25 @@ const GroupChatBubble = ({ message }) => {
     const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
 
     if (diffInMinutes < 1) {
-        return "Just now";
+      return "Just now";
     } else if (diffInMinutes === 1) {
-        return "1 min ago";
+      return "1 min ago";
     } else if (diffInMinutes < 60) {
-        return `${diffInMinutes} mins ago`;
+      return `${diffInMinutes} mins ago`;
     } else if (diffInMinutes < 24 * 60) {
-        const hours = Math.floor(diffInMinutes / 60);
-        return `${hours} ${hours === 1 ? "hour" : "hours"} ago`;
+      const hours = Math.floor(diffInMinutes / 60);
+      return `${hours} ${hours === 1 ? "hour" : "hours"} ago`;
     } else if (diffInMinutes < 30 * 24 * 60) {
-        const days = Math.floor(diffInMinutes / (60 * 24));
-        return `${days} ${days === 1 ? "day" : "days"} ago`;
+      const days = Math.floor(diffInMinutes / (60 * 24));
+      return `${days} ${days === 1 ? "day" : "days"} ago`;
     } else if (diffInMinutes < 365 * 24 * 60) {
-        const months = Math.floor(diffInMinutes / (30 * 24 * 60));
-        return `${months} ${months === 1 ? "month" : "months"} ago`;
+      const months = Math.floor(diffInMinutes / (30 * 24 * 60));
+      return `${months} ${months === 1 ? "month" : "months"} ago`;
     } else {
-        const years = Math.floor(diffInMinutes / (365 * 24 * 60));
-        return `${years} ${years === 1 ? "year" : "years"} ago`;
+      const years = Math.floor(diffInMinutes / (365 * 24 * 60));
+      return `${years} ${years === 1 ? "year" : "years"} ago`;
     }
-}
+  }
 
   if (!message) {
     return null;
@@ -60,14 +60,24 @@ const GroupChatBubble = ({ message }) => {
               </div>
             </div>
             <div>
-              <div className="h-10 w-10 bg-#3C3B34 ml-auto rounded-full"></div>
+              <div className="h-10 w-10 ml-auto rounded-full">
+                <img
+                  src={message?.Sender?.picture}
+                  class={`rounded-full border-2 border-#1D201D w-[2.5vw] h-[5vh]  object-cover `}
+                />
+              </div>
             </div>
           </div>
         </>
       ) : (
         <div className="flex justify-end items-end ml-2 mb-4 ">
           <div>
-            <div className="h-10 w-10 bg-#3C3B34 ml-auto rounded-full"></div>
+            <div className="h-10 w-10  ml-auto rounded-full">
+            <img
+                  src={message?.Sender?.picture}
+                  class={`rounded-full border-2 border-#1D201D w-[2.5vw] h-[5vh]  object-cover `}
+                />
+            </div>
           </div>
           <div
             className={`flex max-w-[80%] min-w-[20%] flex-col 2 rounded-r-xl rounded-tl-xl bg-white shadow-md md:max-w-[60%] mr-auto p-2 mx-3 mb-6 `}

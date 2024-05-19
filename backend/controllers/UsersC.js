@@ -30,7 +30,7 @@ exports.signup = async (req, res) => {
     } else {
       msg = e.message;
     }
-    res.status(400).json(msg);
+    res.status(500).json(msg);
   }
 };
 

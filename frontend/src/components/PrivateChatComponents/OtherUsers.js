@@ -49,7 +49,7 @@ const OtherUsers = ({ user }) => {
           <div class="relative me-4">
             <img
               src={user.picture}
-              class={`rounded-full border-2  w-[2.5vw] h-[5vh]  object-cover `}
+              className="rounded-full object-cover w-[40px] h-[40px]"
             />
             {isOnline ? (
               <span class="top-0 start-7 absolute w-2.5 h-2.5 bg-green-500  rounded-full"></span>
@@ -65,7 +65,7 @@ const OtherUsers = ({ user }) => {
           </div>
         </div>
         <div class="flex flex-col items-center">
-          <span class="text-gray-400 text-sm">11:26</span>
+          <span class="text-gray-400 hidden text-sm">11:26</span>
         </div>
       </li>
       <hr></hr>

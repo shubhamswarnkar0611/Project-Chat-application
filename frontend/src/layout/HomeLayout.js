@@ -4,16 +4,21 @@ import { useDispatch, useSelector } from "react-redux";
 import apiService from "../services/Api";
 import { getCurrentUser, setOnlineUser } from "../store/userSlice";
 import Sidebar from "../components/Sidebar";
-import Rightbar from "../components/Rightbar";
+import Rightbar from "../components/RightBarComponents/Rightbar";
 import { Outlet } from "react-router-dom";
 import { setSocket } from "../store/socketSlice";
 import { io } from "socket.io-client";
 
 const HomeLayout = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isOpenRightBar, setIsOpenRightBar] = useState(true);
   const dispatch = useDispatch();
   const SOCKET_URL = "http://localhost:4000";
-  const {socket} = useSelector((store) => store.socket);
+  const { socket } = useSelector((store) => store.socket);
+
+  function toggleRightBar() {
+    setIsOpenRightBar(!isOpenRightBar);
+  }
 
   useEffect(() => {
     async function fetchUser() {
@@ -33,10 +38,9 @@ const HomeLayout = () => {
             dispatch(setOnlineUser(onlineUser));
           });
 
-
-          return ()=>{
+          return () => {
             socket.disconnect();
-          }
+          };
         } else {
           if (socket) {
             socket.disconnect();
@@ -54,9 +58,20 @@ const HomeLayout = () => {
 
   return !isLoading ? (
     <div className="bg-#1D201D h-[100vh] flex lg:flex-row flex-col items-center ">
-      <Sidebar />
+      <Sidebar toggleRightBar={toggleRightBar} />
       <Outlet />
-      <Rightbar />
+      <aside
+        id="logo-sidebar"
+        className={`fixed lg:static  h-screen  top-0 right-0   transition-transform ${
+          isOpenRightBar && "translate-x-full lg:-translate-x-0 "
+        }  sm:-translate-y-0 w-[100vw]  bg-opacity-65  lg:bg-transparent bg-white flex justify-end lg:justify-center items-center  `}
+        aria-label="Sidebar"
+      >
+        <Rightbar
+          toggleRightBar={toggleRightBar}
+          isOpenRightBar={isOpenRightBar}
+        />
+      </aside>
     </div>
   ) : (
     <div>

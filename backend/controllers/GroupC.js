@@ -37,11 +37,13 @@ exports.sendGroupMessage = async (req, res) => {
       where: {
         id: newMessage.id,
       },
-      include:[{
-        model: User,
-        as:"Sender"
-      }]
-    })
+      include: [
+        {
+          model: User,
+          as: "Sender",
+        },
+      ],
+    });
     const groupmember = await GroupMembership.findAll({
       where: {
         GroupId,
@@ -73,11 +75,12 @@ exports.createGroup = async (req, res) => {
     const newGroup = await Group.create({
       name,
     });
+    
     users.map(async (user) => {
       const newMember = await GroupMembership.create({
         UserId: user.id,
         GroupId: newGroup.id,
-        isAdmin : user.isAdmin
+        isAdmin: user.isAdmin,
       });
     });
 
@@ -116,20 +119,91 @@ exports.getGroupMessages = async (req, res) => {
 exports.getAllMember = async (req, res) => {
   const { GroupId } = req.body;
   try {
-    
     const allMember = await GroupMembership.findAll({
-      where:{
-        GroupId
+      where: {
+        GroupId,
       },
-      include:[{
-        model:User,
-      }],
-    })
+      include: [
+        {
+          model: User,
+        },
+      ],
+    });
 
-    res.status(200).json(allMember)
-
-  }catch(error){
+    res.status(200).json(allMember);
+  } catch (error) {
     console.error("Error retrieving messages:", error.message);
     res.status(500).json({ error: "Error retrieving messages" });
   }
-}
+};
+
+exports.getCurrentUserIsAdmin = async (req, res) => {
+  const { GroupId, UserId } = req.body;
+  console.log("working", GroupId, UserId);
+  try {
+    const userIsAdmin = await GroupMembership.findOne({
+      where: { GroupId, UserId },
+    });
+
+    res.status(200).json(userIsAdmin);
+  } catch (error) {
+    console.error("Error retrieving messages:", error.message);
+    res.status(500).json({ error: "Error retrieving isAdmin" });
+  }
+};
+
+exports.MakeAdmin = async (req, res) => {
+  const { GroupId, UserId } = req.body;
+  console.log("working", GroupId, UserId);
+  try {
+    const MemberDetails = await GroupMembership.findOne({
+      where: { GroupId, UserId },
+    });
+    const { isAdmin } = MemberDetails.dataValues;
+
+    if (isAdmin == 0) {
+      await GroupMembership.update(
+        { isAdmin: 1 },
+        { where: { GroupId, UserId } }
+      );
+      res.status(200).json({ message: "Admin added" });
+    }
+  } catch (error) {
+    console.error("Error retrieving messages:", error.message);
+    res.status(500).json({ error: "Error retrieving messages" });
+  }
+};
+
+exports.kickUserFromGroup = async (req, res) => {
+  try {
+    const { GroupId, UserId } = req.body;
+    const memberDetails = await GroupMembership.findOne({
+      where: { GroupId, UserId },
+    });
+
+    if (!memberDetails) {
+      return res.status(404).json({ error: "Membership not found" });
+    }
+    await memberDetails.destroy();
+    res.status(200).json({ message: "User removed from group successfully" });
+  } catch (error) {
+    console.error("Error removing user from group:", error.message);
+    res.status(500).json({ error: "Error removing user from group" });
+  }
+};
+
+exports.addUserToGroup = async (req, res) => {
+  try {
+    const { GroupId, UserId } = req.body;
+
+    const newMember = await GroupMembership.create({
+      UserId,
+      GroupId,
+      isAdmin: false,
+    });
+
+    res.status(200).json(newMember);
+  } catch (e) {
+    res.json(e.message);
+  }
+};

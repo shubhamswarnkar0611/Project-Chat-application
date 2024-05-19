@@ -52,9 +52,7 @@ const ChatContent = () => {
             <div className="flex items-center">
               <img
                 src={selectedUserData.picture}
-                width="40"
-                height="40"
-                className="rounded-full"
+                className="rounded-full object-cover w-[40px] h-[40px]"
               />
               <p className="text-xl font-semibold ml-3 text-#1D201D">
                 {selectedUserData.firstName} {selectedUserData.lastName}

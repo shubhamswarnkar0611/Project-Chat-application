@@ -65,14 +65,25 @@ const ChatBubble = ({ message }) => {
               </div>
             </div>
             <div>
-              <div className="h-10 w-10 bg-#3C3B34 ml-auto rounded-full"></div>
+              <div className="h-10 w-10 ml-auto rounded-full">
+              <img
+                  src={currentUserData.picture}
+                  class={`rounded-full border-2 border-#1D201D w-[2.5vw] h-[5vh]  object-cover `}
+                />
+            
+              </div>
             </div>
           </div>
         </>
       ) : (
         <div className="flex justify-end items-end ml-2 mb-4 ">
           <div>
-            <div className="h-10 w-10 bg-#3C3B34 ml-auto rounded-full"></div>
+            <div className="h-10 w-10  ml-auto rounded-full">
+            <img
+                  src={message?.Sender?.picture}
+                  class={`rounded-full border-2 border-#1D201D w-[2.5vw] h-[5vh]  object-cover `}
+                />
+            </div>
           </div>
           <div
             className={`flex max-w-[80%] min-w-[20%] flex-col 2 rounded-r-xl rounded-tl-xl bg-white shadow-md md:max-w-[60%] mr-auto p-2 mx-3 mb-6 `}

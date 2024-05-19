@@ -63,7 +63,7 @@ const GroupChatContent = () => {
             </div>
           </div>
 
-          <div className="lg:h-[78vh] ">
+          <div className="lg:h-[78vh] flex flex-col  ">
             <ScrollToBottom className="lg:h-[70vh] h-[48vh] mx-4  p-4">
               <div class="flex w-full flex-col gap-4 ">
                 {getmessage &&

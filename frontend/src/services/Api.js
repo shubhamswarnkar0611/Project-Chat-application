@@ -58,6 +58,28 @@ export class ApiService {
     const result = axios.post(`${Base_URL}/getAllMember`, { GroupId });
     return result;
   }
+  getCurrentUserIsAdmin(GroupId, UserId) {
+    const result = axios.post(`${Base_URL}/getCurrentUserIsAdmin`, {
+      GroupId,
+      UserId,
+    });
+    return result;
+  }
+  MakeAdmin(GroupId, UserId) {
+    const result = axios.post(`${Base_URL}/MakeAdmin`, { GroupId, UserId });
+    return result;
+  }
+  kickUser(GroupId, UserId) {
+    const result = axios.post(`${Base_URL}/kickUser`, { GroupId, UserId });
+    return result;
+  }
+  addUserToGroup(GroupId, UserId) {
+    const result = axios.post(`${Base_URL}/addUserToGroup`, {
+      GroupId,
+      UserId,
+    });
+    return result;
+  }
 }
 
 const apiService = new ApiService();

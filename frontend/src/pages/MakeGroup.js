@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { MdGroup } from "react-icons/md";
 import { PiCodesandboxLogoFill } from "react-icons/pi";
 import apiService from "../services/Api";
 import { useSelector, useDispatch } from "react-redux";
-import { setSelectedUserToCreateGroup } from "../store/groupSlice";
+import {
+  setGroupMembers,
+  setSelectedUserToCreateGroup,
+} from "../store/groupSlice";
 import { ImCross } from "react-icons/im";
+import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 
 const MakeGroup = () => {
   const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
   const currentUserData = useSelector((state) => state.user.currentUserDetails);
@@ -20,24 +27,24 @@ const MakeGroup = () => {
     async function fetchAllUser() {
       const result = await apiService.getAllUsers();
       setUsers(result.data);
+      dispatch(setGroupMembers(null));
     }
     fetchAllUser();
   }, []);
 
   function handleAddUserToGroup(selectedUser) {
-    if ((selectedUser.id === currentUserData.id)) {
+    if (selectedUser.id === currentUserData.id) {
       dispatch(
         setSelectedUserToCreateGroup([
           ...selectedUserIdToCreateGroupData,
-          { ...selectedUser, isAdmin: true }
+          { ...selectedUser, isAdmin: true },
         ])
       );
-
     } else {
       dispatch(
         setSelectedUserToCreateGroup([
           ...selectedUserIdToCreateGroupData,
-          { ...selectedUser, isAdmin: false }
+          { ...selectedUser, isAdmin: false },
         ])
       );
     }
@@ -53,18 +60,26 @@ const MakeGroup = () => {
   async function createGroupHandler(e) {
     e.preventDefault();
     let name = e.target.groupName.value;
+    setIsLoading(true);
     try {
       const group = await axios.post("http://localhost:4000/createGroup", {
         name,
         users: selectedUserIdToCreateGroupData,
       });
-      console.log(group);
+      if (group) {
+        toast.success("Group Created Successfully");
+      }
+
+      // navigate("/group")
     } catch (err) {
-      console.log("Error creating the Group", err);
+      toast.error("Error creating the Group");
+    } finally {
+      setIsLoading(false);
     }
   }
   return (
     <div className="w-[80vw] flex justify-center items-center  h-[100vh] ">
+      <Toaster />
       <div className=" bg-#1D201D w-[72vw] lg:h-[96vh] rounded-3xl ">
         <div className="flex lg:ml-44 items-center h-[10vh] lg:h-[30vh] lg:w-[59vh]">
           <PiCodesandboxLogoFill className="text-#fdfcf3 text-2xl mx-2" />
@@ -74,7 +89,7 @@ const MakeGroup = () => {
         </div>
         <div className="text-neutral-800  lg:h-[30vh] w-[70vw]  rounded-xl  flex justify-center items-start  relative    ">
           <form onSubmit={(e) => createGroupHandler(e)}>
-            <div className="lg:w-[50vw] w-[90vw] h-[68vh] lg:h-[50vh]  p-6 rounded-3xl  bg-#fdfcf3 flex flex-col items-center lg:block ">
+            <div className="lg:w-[50vw] w-[90vw] min-h-[68vh] lg:min-h-[50vh]  p-6 rounded-3xl  bg-#fdfcf3 flex flex-col items-center lg:block ">
               <p className="text-4xl font-bold text-#1D201D my-10">
                 Create a Group
               </p>
@@ -124,7 +139,7 @@ const MakeGroup = () => {
                 className="py-2 px-5  hover:bg-white hover:text-neutral-700  font-bold rounded-full shadow-md bg-#595f39 text-neutral-100 hover:shadow-md hover:shadow-#E4E4DE focus:outline-none focus:ring focus:ring-violet-200 focus:ring-opacity-75 w-[20vw] my-8 mx-52"
                 type="submit"
               >
-                <p>Create</p>
+                {!isLoading ? <p>Create</p> : <p>Creating..</p>}
               </button>
             </div>
           </form>
