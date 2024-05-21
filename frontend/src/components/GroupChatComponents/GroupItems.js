@@ -69,7 +69,7 @@ const GroupItems = ({ group }) => {
         <div className="flex items-start">
           <div className="relative mr-2">
             <img
-              src="https://i.imgur.com/aq39RMA.jpg"
+              src="https://images.unsplash.com/photo-1502444330042-d1a1ddf9bb5b?q=80&w=2673&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               width="40"
               height="40"
               className="rounded-full border-2"

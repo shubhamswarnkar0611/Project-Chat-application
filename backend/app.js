@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const { app, io, server } = require("./socket/socket-io");
 const cors = require("cors");
@@ -11,8 +12,10 @@ const User = require("./models/UsersM");
 const Group = require("./models/GroupM");
 const GroupMessage = require("./models/GroupMessagesM");
 const GroupMembership = require("./models/GroupMembershipM");
+const PORT = process.env.PORT
 
 // Middleware
+console.log(PORT,"PORT")
 app.use(
   cors({
     origin: ["http://localhost:3000"],
@@ -58,8 +61,8 @@ sequelize
   .sync({ force: false }) 
   .then(() => {
     console.log("Database synced successfully");
-    server.listen(4000, () => {
-      console.log("Server is running on port 4000");
+    server.listen(PORT, () => {
+      console.log("Server is running on port 4004");
     });
   })
   .catch((error) => {

@@ -48,7 +48,7 @@ const GroupChatContent = () => {
           <div className="lg:h-[10vh] h-[8vh] rounded-xl flex items-center justify-between px-4 ">
             <div className="flex items-center">
               <img
-                src="https://i.imgur.com/rT6iLKV.jpeg"
+                src="https://images.unsplash.com/photo-1502444330042-d1a1ddf9bb5b?q=80&w=2673&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 width="40"
                 height="40"
                 className="rounded-full"

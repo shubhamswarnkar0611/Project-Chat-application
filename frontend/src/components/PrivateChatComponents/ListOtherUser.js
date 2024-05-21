@@ -8,16 +8,15 @@ import { setGroupMembers } from "../../store/groupSlice.js";
 const ListOtherUser = ({ title }) => {
   const currentUserData = useSelector((state) => state.user.currentUserDetails);
   const [allUsers, setAllUsers] = useState([]);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function getAllUserDetails() {
       try {
         const AllUsers = await apiService.getAllUsers();
         setAllUsers(AllUsers.data);
-        dispatch(setUsers(AllUsers.data))
-        dispatch(setGroupMembers(null))
-
+        dispatch(setUsers(AllUsers.data));
+        dispatch(setGroupMembers(null));
       } catch (e) {
         alert("Error while fetching user details");
       }
@@ -30,22 +29,21 @@ const ListOtherUser = ({ title }) => {
       <div className="hidden lg:h-[10vh] h-[10vh] lg:flex justify-start items-center px-5 lg:w-[20vw] xl:w-[16vw] bg-#1D201D rounded-2xl shadow-xl ">
         <p className=" font-semibold  text-xl text-white">{title}</p>
       </div>
-      <div className="lg:min-h-[78vh] lg:w-[20vw] xl:w-[16vw]  h-[10vh] lg:block flex justify-center items-center bg-white shadow-md  rounded-2xl  lg:mt-3  lg:overflow-hidden mx-2   ">
-        <ul className="flex  lg:block rounded-2xl   ">
-          {allUsers &&
-            allUsers.map((user) => {
-              {
-                if (user.id != currentUserData.id) {
-                  return (
-                    <>
-                      <OtherUsers user={user} key={user.id} />
-                    </>
-                  );
-                }
+
+      <ul className="flex lg:min-h-[76vh] lg:block rounded-2xl   lg:w-[20vw] xl:w-[16vw]  h-[10vh]  justify-center items-center lg:overflow-x-hidden shadow-md   lg:mt-3  bg-white mx-2     ">
+        {allUsers &&
+          allUsers.map((user) => {
+            {
+              if (user.id != currentUserData.id) {
+                return (
+                  <>
+                    <OtherUsers user={user} key={user.id} />
+                  </>
+                );
               }
-            })}
-        </ul>
-      </div>
+            }
+          })}
+      </ul>
     </div>
   );
 };

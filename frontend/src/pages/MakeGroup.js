@@ -62,7 +62,7 @@ const MakeGroup = () => {
     let name = e.target.groupName.value;
     setIsLoading(true);
     try {
-      const group = await axios.post("http://localhost:4000/createGroup", {
+      const group = await axios.post("http://localhost:4004/createGroup", {
         name,
         users: selectedUserIdToCreateGroupData,
       });

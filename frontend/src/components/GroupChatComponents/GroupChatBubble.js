@@ -63,7 +63,7 @@ const GroupChatBubble = ({ message }) => {
               <div className="h-10 w-10 ml-auto rounded-full">
                 <img
                   src={message?.Sender?.picture}
-                  class={`rounded-full border-2 border-#1D201D w-[2.5vw] h-[5vh]  object-cover `}
+                  class={`rounded-full border-2 border-#1D201D w-[40px] h-[40px]  object-cover `}
                 />
               </div>
             </div>
@@ -75,7 +75,7 @@ const GroupChatBubble = ({ message }) => {
             <div className="h-10 w-10  ml-auto rounded-full">
             <img
                   src={message?.Sender?.picture}
-                  class={`rounded-full border-2 border-#1D201D w-[2.5vw] h-[5vh]  object-cover `}
+                  class={`rounded-full border-2 border-#1D201D w-[40px] h-[40px]  object-cover `}
                 />
             </div>
           </div>

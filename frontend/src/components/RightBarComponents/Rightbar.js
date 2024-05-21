@@ -81,7 +81,7 @@ const Rightbar = ({ isOpenRightBar, toggleRightBar }) => {
         </button>
         <div className="lg:h-[5vh] h-[70px] w-[90px] mt-10 flex justify-center items-center lg:w-[5vw] ">
           <img
-            src="https://i.imgur.com/aq39RMA.jpg"
+            src="https://images.unsplash.com/photo-1502444330042-d1a1ddf9bb5b?q=80&w=2673&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             className="rounded-full border-4 border-white shadow-xl  object-cover"
           />
         </div>
